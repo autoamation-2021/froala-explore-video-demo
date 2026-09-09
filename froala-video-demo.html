@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Prevents YouTube "Error 153: Video player configuration error".
+     YouTube's embedded player requires a referrer/origin header. Some browsers
+     send none when a page is opened directly as a file:// URL, which triggers
+     Error 153. This meta tag forces the browser to send one. -->
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Froala Editor — Video Feature Demo</title>
+
+<!-- Froala Editor CSS (public CDN, always latest stable) -->
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+
+<style>
+  body {
+    font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    color: #222;
+  }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .subtitle { color: #666; margin-bottom: 24px; }
+  .instructions {
+    background: #f4f6f8;
+    border: 1px solid #e0e4e8;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .instructions code {
+    background: #e8ecf0;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  #editor-wrapper { margin-bottom: 40px; }
+  footer { color: #999; font-size: 12px; text-align: center; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<h1>Froala Editor — Video Feature Demo</h1>
+<p class="subtitle">A self-contained page for exploring how videos work inside the Froala rich text editor.</p>
+
+<div class="instructions">
+  Try it out:
+  <ol>
+    <li>Click inside the editor below.</li>
+    <li>Click the <strong>video icon</strong> in the toolbar (looks like a small film strip / play button).</li>
+    <li>In the dialog, either:
+      <ul>
+        <li>Paste a <strong>video URL</strong> (YouTube/Vimeo link), or</li>
+        <li>Paste an <strong>embed code</strong>, or</li>
+        <li><strong>Upload a video file</strong> from your computer (stored temporarily in browser memory for this demo — see note below).</li>
+      </ul>
+    </li>
+    <li>Once inserted, click the video to see resize handles and the alignment/wrap options.</li>
+  </ol>
+  <p style="margin-top:10px;"><strong>Note:</strong> This demo uses <code>videoUploadURL</code> pointing nowhere real, so file uploads in this sandbox will fail — that part needs a real backend (see the .NET/PHP/etc. server guides in Froala's docs). URL and embed-code insertion, resizing, and responsive behavior all work fully offline, right in this file.</p>
+</div>
+
+<div class="instructions" style="background:#fff8e6; border-color:#ffe1a8;">
+  <strong>⚠️ Avoid "Error 153: Video player configuration error"</strong><br>
+  If you double-click this file and it opens as a <code>file://...</code> URL, YouTube may refuse to
+  load embedded videos because no referrer/origin header is sent from local files — that's the exact
+  error shown in the "Video player configuration error" screen. To avoid it entirely, serve this file
+  over a local server instead of opening it directly:
+  <ul style="margin-top:6px;">
+    <li>If Python is installed: open a terminal in this file's folder and run
+      <code>python3 -m http.server 8000</code>, then visit
+      <code>http://localhost:8000/froala-video-feature-demo.html</code></li>
+    <li>Or use the VS Code "Live Server" extension, or any other local static server</li>
+  </ul>
+  This gives the page a real <code>http://</code> origin, which YouTube accepts.
+</div>
+
+<div class="instructions">
+  <strong>Editing an existing video</strong> (already inserted, like the sample below): click once on
+  the video to select it — a floating popup appears with buttons to <strong>Replace</strong> it,
+  <strong>Remove</strong> it, change <strong>Display</strong> (block/inline) or <strong>Align</strong>ment,
+  set an exact <strong>Size</strong>, or toggle <strong>Autoplay</strong>. You can also just drag the
+  square handles on its corners/edges to resize it freely, or drag a new video file from your desktop
+  straight onto the editor to swap it in.
+</div>
+
+<div id="editor-wrapper">
+  <div id="edit">
+    <h3>Existing video — click it to edit, replace, resize, or remove it</h3>
+    <p><span class="fr-video fr-dvb fr-fvc" contenteditable="false"><span style="width: 560px;"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen="" referrerpolicy="strict-origin-when-cross-origin"></iframe></span></span></p>
+    <p>Below this line: place your cursor here and click the video icon in the toolbar to insert a brand new one.</p>
+  </div>
+</div>
+
+<footer>Loaded from the public Froala CDN (jsdelivr.net) — no installation required.</footer>
+
+<!-- Froala Editor JS (public CDN, always latest stable) -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+
+<script>
+  new FroalaEditor('#edit', {
+    // Make the video button visible and prominent in the toolbar
+    toolbarButtons: [
+      'bold', 'italic', 'underline', '|',
+      'insertVideo', 'insertImage', 'insertLink', '|',
+      'align', 'formatOL', 'formatUL', '|',
+      'undo', 'redo', 'html'
+    ],
+
+    // Let YouTube/Vimeo videos reflow responsively with screen size.
+    // Set to false if you want manual drag-resize + align/display controls
+    // in the edit popup (responsive mode disables those, per Froala docs).
+    videoResponsive: false,
+
+    // Buttons shown in the floating popup when an existing video is selected.
+    // Default order shown explicitly here so it's easy to add/remove/reorder.
+    videoEditButtons: [
+      'videoReplace', 'videoRemove', '|',
+      'videoDisplay', 'videoAlign', 'videoSize', 'autoplay'
+    ],
+
+    // Default alignment for newly inserted videos.
+    videoDefaultAlign: 'center',
+
+    // Default display for newly inserted videos: 'block' (own line) or 'inline'.
+    videoDefaultDisplay: 'block',
+
+    // Allow both file upload and pasting embed/URL
+    videoAllowedTypes: ['mp4', 'webm', 'ogg'],
+    videoMaxSize: 1024 * 1024 * 30, // 30MB, demo only
+
+    // Placeholder upload endpoint — replace with a real server endpoint to make
+    // file uploads (including drag-and-drop of video files onto the editor)
+    // actually persist. See the server integration docs for PHP/.NET/Node/etc.
+    videoUploadURL: '/demo-upload-endpoint-not-real',
+
+    height: 350
+  });
+</script>
+
+</body>
+</html>
