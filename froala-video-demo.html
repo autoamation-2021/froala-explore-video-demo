@@ -3,10 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Prevents YouTube "Error 153: Video player configuration error".
-     YouTube's embedded player requires a referrer/origin header. Some browsers
-     send none when a page is opened directly as a file:// URL, which triggers
-     Error 153. This meta tag forces the browser to send one. -->
+<!-- Prevents YouTube "Error 153: Video player configuration error". -->
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Froala Editor — Video Feature Demo</title>
 
@@ -36,7 +33,7 @@
   <div id="edit">
     <h3>Existing video — click it to edit, replace, resize, or remove it</h3>
     <p><span class="fr-video fr-dvb fr-fvc" contenteditable="false"><span style="width: 560px;"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen="" referrerpolicy="strict-origin-when-cross-origin"></iframe></span></span></p>
-    <p>Below this line: place your cursor here and click the video icon in the toolbar to insert a brand new one.</p>
+    <p>Below this line: place your cursor here and click the video icon in the toolbar to upload, embed, or use a URL.</p>
   </div>
 </div>
 
@@ -58,31 +55,29 @@
     ],
 
     // Let YouTube/Vimeo videos reflow responsively with screen size.
-    // Set to false if you want manual drag-resize + align/display controls
-    // in the edit popup (responsive mode disables those, per Froala docs).
     videoResponsive: false,
 
     // Buttons shown in the floating popup when an existing video is selected.
-    // Default order shown explicitly here so it's easy to add/remove/reorder.
     videoEditButtons: [
       'videoReplace', 'videoRemove', '|',
       'videoDisplay', 'videoAlign', 'videoSize', 'autoplay'
     ],
 
+    // 1. INCLUDE 'videoUpload' HERE to show the upload tab in the popup
+    videoInsertButtons: ['videoBack', 'videoUpload', 'videoByURL', 'videoEmbed'],
+
     // Default alignment for newly inserted videos.
     videoDefaultAlign: 'center',
 
-    // Default display for newly inserted videos: 'block' (own line) or 'inline'.
+    // Default display for newly inserted videos: 'block' or 'inline'.
     videoDefaultDisplay: 'block',
 
-    // Allow both file upload and pasting embed/URL
+    // 2. Allowed file types for local uploads
     videoAllowedTypes: ['mp4', 'webm', 'ogg'],
-    videoMaxSize: 1024 * 1024 * 30, // 30MB, demo only
+    videoMaxSize: 1024 * 1024 * 30, // 30MB limit example
 
-    // Placeholder upload endpoint — replace with a real server endpoint to make
-    // file uploads (including drag-and-drop of video files onto the editor)
-    // actually persist. See the server integration docs for PHP/.NET/Node/etc.
-    videoUploadURL: '/demo-upload-endpoint-not-real',
+    // 3. Replace with your actual backend upload endpoint URL (PHP, Node, .NET, etc.)
+    videoUploadURL: '/your-server-video-upload-endpoint',
 
     height: 350
   });
