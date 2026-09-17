@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Froala Editor — Image Feature Demo</title>
 
+<!-- Froala Editor CSS (public CDN, always latest stable) -->
 <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 
 <style>
@@ -23,6 +24,7 @@
 </head>
 <body>
 
+<!-- Navigation Bar to switch between pages -->
 <nav style="margin-bottom: 20px; padding: 12px; background: #f4f4f4; border-radius: 6px;">
   <a href="froala-editor-video.html" style="margin-right: 20px; text-decoration: none; font-weight: bold; color: #555;">Video Demo</a>
   <a href="froala-editor-image.html" style="text-decoration: none; font-weight: bold; color: #0066cc;">Image Demo</a>
@@ -41,6 +43,7 @@
 
 <footer>Loaded from the public Froala CDN (jsdelivr.net) — no installation required.</footer>
 
+<!-- Froala Editor JS (public CDN, always latest stable) -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
 
 <script>
@@ -68,6 +71,22 @@
     imageDefaultDisplay: 'block',
     imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif', 'webp', 'svg'],
     imageMaxSize: 1024 * 1024 * 10,
+
+    // CLIENT-SIDE HANDLER: Converts uploaded images to Base64 so it works without a backend server
+    events: {
+      'image.beforeUpload': function (files) {
+        var editor = this;
+        if (files.length) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var result = e.target.result;
+            editor.image.insert(result, null, null, editor.image.get());
+          };
+          reader.readAsDataURL(files[0]);
+        }
+        return false; // Prevents the default AJAX request error
+      }
+    },
 
     height: 350
   });
