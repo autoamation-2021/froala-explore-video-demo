@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Froala Content — Read-Only Render View</title>
+
+<!-- Froala View CSS so elements render accurately -->
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+
+<style>
+  body {
+    font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    color: #222;
+    line-height: 1.6;
+  }
+  .nav-bar { margin-bottom: 20px; padding: 12px; background: #f4f4f4; border-radius: 6px; }
+  .nav-bar a { margin-right: 20px; text-decoration: none; font-weight: bold; color: #555; }
+  .nav-bar a.active { color: #0066cc; }
+
+  .content-container {
+    padding: 24px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+  }
+  footer { color: #999; font-size: 12px; text-align: center; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="froala-editor-video.html">Video Demo</a>
+  <a href="froala-editor-image.html">Editor Demo</a>
+  <a href="froala-render.html" class="active">Rendered View</a>
+</nav>
+
+<h1>Rendered HTML Preview</h1>
+<p style="color: #666; margin-bottom: 20px;">This page reads your saved editor content and displays it as a standard HTML page without any editor controls.</p>
+
+<div class="content-container">
+  <!-- fr-view class ensures native Froala element styling applies cleanly -->
+  <div id="rendered-output" class="fr-view">
+    <p>Loading content from editor...</p>
+  </div>
+</div>
+
+<footer>Static HTML Render Page — Read-Only Mode</footer>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    var savedContent = localStorage.getItem('froalaContent');
+    var outputDiv = document.getElementById('rendered-output');
+    
+    if (savedContent) {
+      outputDiv.innerHTML = savedContent;
+    } else {
+      outputDiv.innerHTML = '<p><em>No content found. Go back to your editor page, make changes, and click "Render Content".</em></p>';
+    }
+  });
+</script>
+
+</body>
+</html>
