@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Froala Editor — Complete Image, List & Table Demo</title>
+<title>Froala Editor — Fully Optimized Production Demo</title>
 
 <!-- Froala Editor CSS -->
 <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
@@ -20,6 +20,16 @@
   .subtitle { color: #666; margin-bottom: 24px; }
   #editor-wrapper { margin-bottom: 40px; }
   footer { color: #999; font-size: 12px; text-align: center; margin-top: 40px; }
+
+  /* --- STABILIZES BULLET/NUMBER INDENTATION --- 
+     Prevents deep nested lists from shifting too far to the extreme right */
+  .fr-view ul, .fr-view ol {
+    padding-left: 20px !important;
+  }
+  .fr-view ul ul, .fr-view ol ol, .fr-view ul ol, .fr-view ol ul {
+    margin-bottom: 0px;
+    padding-left: 20px !important;
+  }
 </style>
 </head>
 <body>
@@ -27,20 +37,20 @@
 <!-- Navigation Bar to switch between pages -->
 <nav style="margin-bottom: 20px; padding: 12px; background: #f4f4f4; border-radius: 6px;">
   <a href="froala-editor-video.html" style="margin-right: 20px; text-decoration: none; font-weight: bold; color: #555;">Video Demo</a>
-  <a href="froala-editor-image.html" style="text-decoration: none; font-weight: bold; color: #0066cc;">Image, List & Table Demo</a>
+  <a href="froala-editor-image.html" style="text-decoration: none; font-weight: bold; color: #0066cc;">Optimized Editor Demo</a>
 </nav>
 
-<h1>Froala Editor — Advanced Feature Demo</h1>
-<p class="subtitle">Supports comprehensive image options, bullet/number indent nesting, Word/Web copy-paste parsing, and full table control.</p>
+<h1>Froala Editor — Optimized Feature Demo</h1>
+<p class="subtitle">Controlled list indentation margins, bullet/number handling, comprehensive table tools, and advanced paste cleanup.</p>
 
 <div id="editor-wrapper">
   <div id="edit">
-    <h3>Test your content below:</h3>
-    <p>Try copying content with bullet points, numbered lists, or tables from MS Word or web pages and paste them directly here. You can also insert and style tables using the toolbar.</p>
+    <h3>Test Content Area:</h3>
+    <p>Try pasting content from MS Word, Excel, or web pages below. Test list nesting and check that indentation stays within a clean boundary.</p>
     <ul>
-      <li>Sample Bullet Level 1
+      <li>Main Parent Item
         <ul>
-          <li>Nested Sub-item</li>
+          <li>Nested Sub-item level 1</li>
         </ul>
       </li>
     </ul>
@@ -57,7 +67,7 @@
   new FroalaEditor('#edit', {
     key: 'zEG4iB3B9C6C4F5B4G4aIVLEABVAYFKc2Cb1MYGH1g1NYVMiG5G4E3A2A1B8D6D4D4G4==',
     
-    // Toolbar configuration including tables, lists, indents, and media
+    // Optimized Toolbar Layout
     toolbarButtons: [
       'bold', 'italic', 'underline', '|',
       'formatOL', 'formatUL', 'indent', 'outdent', '|',
@@ -66,14 +76,17 @@
       'undo', 'redo', 'html'
     ],
 
-    // --- TABLE EDITING POPUP (Appears when clicking inside a table) ---
+    // Advanced List Options
+    listAdvancedTypes: true,
+
+    // Table Editing Popup Controls
     tableEditButtons: [
       'tableHeader', 'tableRemove', '|', 
       'tableRows', 'tableColumns', 'tableStyle', '-', 
       'tableCells', 'tableCellBackground', 'tableCellVerticalAlign', 'tableCellHorizontalAlign'
     ],
 
-    // --- IMAGE EDITING POPUP ---
+    // Image Editing Popup Controls
     imageEditButtons: [
       'imageReplace', 'imageAlign', 'imageCaption', 'imageLink', 
       'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize', 'imageRemove'
@@ -87,10 +100,11 @@
     imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif', 'webp', 'svg'],
     imageMaxSize: 1024 * 1024 * 10,
 
-    // --- PASTE CONFIGURATIONS (MS Word, Excel, and Web Sources) ---
-    wordPasteModal: true,           // Prompts user when pasting from MS Word to keep or clear styles
-    wordPasteKeepFormatting: true,  // Preserves Word bullet nesting, bold text, and tables cleanly
-    pastePlain: false,              // Keeps rich text structures instead of forcing plain text
+    // --- COMPREHENSIVE PASTE & CLIPBOARD SCENARIOS ---
+    pastePlain: false,              // Keeps formatting like bold, lists, and links intact
+    wordPasteModal: true,           // Prompts user on Word paste to decide formatting handling
+    wordPasteKeepFormatting: true,  // Keeps clean bullet points and nested hierarchies from Word
+    pasteAllowLocalImages: true,    // Allows copying images directly from local clipboard contexts
 
     // Client-side local file handler for static hosting compatibility (Images)
     events: {
