@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Froala Editor — Image Feature Demo</title>
 
-<!-- Froala Editor CSS (public CDN, always latest stable) -->
 <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 
 <style>
@@ -24,6 +23,11 @@
 </head>
 <body>
 
+<nav style="margin-bottom: 20px; padding: 12px; background: #f4f4f4; border-radius: 6px;">
+  <a href="froala-editor-video.html" style="margin-right: 20px; text-decoration: none; font-weight: bold; color: #555;">Video Demo</a>
+  <a href="froala-editor-image.html" style="text-decoration: none; font-weight: bold; color: #0066cc;">Image Demo</a>
+</nav>
+
 <h1>Froala Editor — Image Feature Demo</h1>
 <p class="subtitle">A self-contained page for exploring all comprehensive image features inside the Froala rich text editor.</p>
 
@@ -37,7 +41,6 @@
 
 <footer>Loaded from the public Froala CDN (jsdelivr.net) — no installation required.</footer>
 
-<!-- Froala Editor JS (public CDN, always latest stable) -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
 
 <script>
@@ -52,25 +55,19 @@
       'undo', 'redo', 'html'
     ],
 
-    // --- COMPREHENSIVE IMAGE EDITING POPUP BUTTONS ---
-    // Exposes all possible controls when an image is clicked in the editor
+    // Comprehensive Image Editing Popup Buttons
     imageEditButtons: [
       'imageReplace', 'imageAlign', 'imageCaption', 'imageLink', 
       'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize', 'imageRemove'
     ],
 
     // Comprehensive Image Configurations
-    imageResize: true,              // Enables corner-handle resizing
-    imageResizeWithPercent: false,  // Uses pixel dimensions (set true for percentages)
-    imageDefaultAlign: 'center',    // Default image alignment
-    imageDefaultDisplay: 'block',   // 'block' puts it on its own line; 'inline' wraps text
-    
-    // Allowed file types and sizing safeguards for image uploads
+    imageResize: true,
+    imageResizeWithPercent: false,
+    imageDefaultAlign: 'center',
+    imageDefaultDisplay: 'block',
     imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif', 'webp', 'svg'],
-    imageMaxSize: 1024 * 1024 * 10, // 10MB limit per image
-
-    // Replace with your actual backend upload endpoint URL (PHP, Node, .NET, etc.)
-    imageUploadURL: '/your-server-image-upload-endpoint',
+    imageMaxSize: 1024 * 1024 * 10,
 
     height: 350
   });
