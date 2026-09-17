@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Froala Editor — Complete Image, List & Table Demo</title>
 
-<!-- Froala Editor CSS -->
 <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 
 <style>
@@ -33,10 +32,15 @@
 </head>
 <body>
 
-<!-- Navigation Bar to switch between pages -->
-<nav style="margin-bottom: 20px; padding: 12px; background: #f4f4f4; border-radius: 6px;">
-  <a href="froala-editor-video.html" style="margin-right: 20px; text-decoration: none; font-weight: bold; color: #555;">Video Demo</a>
-  <a href="froala-editor-image.html" style="text-decoration: none; font-weight: bold; color: #0066cc;">Image, List & Table Demo</a>
+<nav style="margin-bottom: 20px; padding: 12px; background: #f4f4f4; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+  <div>
+    <a href="froala-editor-video.html" style="margin-right: 20px; text-decoration: none; font-weight: bold; color: #555;">Video Demo</a>
+    <a href="froala-editor-image.html" style="margin-right: 20px; text-decoration: none; font-weight: bold; color: #0066cc;">Image, List & Table Demo</a>
+    <a href="froala-render.html" style="margin-left: 20px; text-decoration: none; font-weight: bold; color: #555;">Render View</a>
+  </div>
+  <button id="render-btn" style="background: #0066cc; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold;">
+    Render Content
+  </button>
 </nav>
 
 <h1>Froala Editor — Final Production Demo</h1>
@@ -51,11 +55,11 @@
 
 <footer>Loaded from the public Froala CDN</footer>
 
-<!-- Froala Editor JS -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
 
 <script>
-  new FroalaEditor('#edit', {
+  // Assign instance to a variable so we can target it programmatically
+  var editorInstance = new FroalaEditor('#edit', {
     key: 'zEG4iB3B9C6C4F5B4G4aIVLEABVAYFKc2Cb1MYGH1g1NYVMiG5G4E3A2A1B8D6D4D4G4==',
     
     // Comprehensive toolbar layout
@@ -113,6 +117,13 @@
     },
 
     height: 450
+  });
+
+  // Event handler for the Render Content button
+  document.getElementById('render-btn').addEventListener('click', function () {
+    var htmlContent = editorInstance.html.get();
+    localStorage.setItem('froalaContent', htmlContent);
+    window.open('froala-render.html', '_blank');
   });
 </script>
 
