@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Froala Editor — Image Feature Demo</title>
+<title>Froala Editor — Complete Image, List & Table Demo</title>
 
 <!-- Froala Editor CSS -->
 <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
@@ -24,19 +24,27 @@
 </head>
 <body>
 
+<!-- Navigation Bar to switch between pages -->
 <nav style="margin-bottom: 20px; padding: 12px; background: #f4f4f4; border-radius: 6px;">
   <a href="froala-editor-video.html" style="margin-right: 20px; text-decoration: none; font-weight: bold; color: #555;">Video Demo</a>
-  <a href="froala-editor-image.html" style="text-decoration: none; font-weight: bold; color: #0066cc;">Image Demo</a>
+  <a href="froala-editor-image.html" style="text-decoration: none; font-weight: bold; color: #0066cc;">Image, List & Table Demo</a>
 </nav>
 
-<h1>Froala Editor — Image Feature Demo</h1>
-<p class="subtitle">A self-contained page for exploring all comprehensive image features.</p>
+<h1>Froala Editor — Advanced Feature Demo</h1>
+<p class="subtitle">Supports comprehensive image options, bullet/number indent nesting, Word/Web copy-paste parsing, and full table control.</p>
 
 <div id="editor-wrapper">
   <div id="edit">
-    <h3>Existing image — click it to edit, resize, or remove it</h3>
+    <h3>Test your content below:</h3>
+    <p>Try copying content with bullet points, numbered lists, or tables from MS Word or web pages and paste them directly here. You can also insert and style tables using the toolbar.</p>
+    <ul>
+      <li>Sample Bullet Level 1
+        <ul>
+          <li>Nested Sub-item</li>
+        </ul>
+      </li>
+    </ul>
     <p><img src="https://raw.githubusercontent.com/froala/wysiwyg-editor/master/test/html/img/old_logo.png" style="width: 300px;" class="fr-fic fr-dii" /></p>
-    <p>Click the image icon in the toolbar below to insert a new local image.</p>
   </div>
 </div>
 
@@ -48,21 +56,43 @@
 <script>
   new FroalaEditor('#edit', {
     key: 'zEG4iB3B9C6C4F5B4G4aIVLEABVAYFKc2Cb1MYGH1g1NYVMiG5G4E3A2A1B8D6D4D4G4==',
+    
+    // Toolbar configuration including tables, lists, indents, and media
     toolbarButtons: [
       'bold', 'italic', 'underline', '|',
+      'formatOL', 'formatUL', 'indent', 'outdent', '|',
+      'insertTable', 'paragraphFormat', 'align', '|',
       'insertImage', 'insertVideo', 'insertLink', '|',
-      'align', 'formatOL', 'formatUL', '|',
       'undo', 'redo', 'html'
     ],
+
+    // --- TABLE EDITING POPUP (Appears when clicking inside a table) ---
+    tableEditButtons: [
+      'tableHeader', 'tableRemove', '|', 
+      'tableRows', 'tableColumns', 'tableStyle', '-', 
+      'tableCells', 'tableCellBackground', 'tableCellVerticalAlign', 'tableCellHorizontalAlign'
+    ],
+
+    // --- IMAGE EDITING POPUP ---
     imageEditButtons: [
       'imageReplace', 'imageAlign', 'imageCaption', 'imageLink', 
       'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize', 'imageRemove'
     ],
+
+    // Image Configuration Settings
     imageResize: true,
+    imageResizeWithPercent: false,
     imageDefaultAlign: 'center',
     imageDefaultDisplay: 'block',
     imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif', 'webp', 'svg'],
-    
+    imageMaxSize: 1024 * 1024 * 10,
+
+    // --- PASTE CONFIGURATIONS (MS Word, Excel, and Web Sources) ---
+    wordPasteModal: true,           // Prompts user when pasting from MS Word to keep or clear styles
+    wordPasteKeepFormatting: true,  // Preserves Word bullet nesting, bold text, and tables cleanly
+    pastePlain: false,              // Keeps rich text structures instead of forcing plain text
+
+    // Client-side local file handler for static hosting compatibility (Images)
     events: {
       'image.beforeUpload': function (files) {
         var editor = this;
@@ -76,7 +106,8 @@
         return false;
       }
     },
-    height: 350
+
+    height: 450
   });
 </script>
 
